@@ -9,7 +9,7 @@
 
     <TextView
         android:text="🎬 Movie Roulette"
-        android:textSize="24sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:layout_marginBottom="32dp"
         android:textColor="#333"
