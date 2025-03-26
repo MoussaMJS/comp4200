@@ -6,12 +6,11 @@
 
     <LinearLayout
         android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/txtResult"
@@ -23,15 +22,23 @@
             android:textColor="#222"
             android:layout_marginBottom="16dp" />
 
-
         <ImageView
             android:id="@+id/imgPoster"
-            android:layout_width="250dp"
-            android:layout_height="350dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp"
             android:scaleType="fitCenter"
             android:background="@android:color/darker_gray" />
 
+        <Button
+            android:id="@+id/btnWatchTrailer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Watch Trailer"
+            android:backgroundTint="#3F51B5"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/movieDsc"
@@ -78,6 +85,34 @@
             android:backgroundTint="#3F51B5"
             android:textColor="#FFFFFF"
             android:padding="12dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:stepSize="0.7" />
+
+            <Button
+                android:id="@+id/btnSubmitRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Submit Rating"
+                android:textSize="14sp" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
-

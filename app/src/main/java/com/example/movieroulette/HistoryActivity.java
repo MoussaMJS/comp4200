@@ -48,8 +48,15 @@ public class HistoryActivity extends AppCompatActivity {
             int movieId = cursor.getInt(1);
             String title = cursor.getString(2);
             String genre = cursor.getString(3);
-            String score = cursor.getString(4);
-            historyList.add(title + " | " + genre + " | " + score + " | " + movieId);
+            String tmdbScore = cursor.getString(4);
+            Cursor ratingCursor = dbHelper.getUserRating(movieId);
+            String userRating = "Not Rated";
+            if (ratingCursor.moveToFirst()) {
+                userRating = ratingCursor.getString(0);
+            }
+            ratingCursor.close();
+
+            historyList.add(title + " | " + genre + " | TMDB: " + tmdbScore + " | Your Rating: " + userRating + " | " + movieId);
             movieIds.add(movieId);
         }
         listView.setAdapter(new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1, historyList));

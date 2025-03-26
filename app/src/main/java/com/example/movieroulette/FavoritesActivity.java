@@ -46,8 +46,15 @@ public class FavoritesActivity extends AppCompatActivity {
             int movieId = cursor.getInt(1);
             String title = cursor.getString(2);
             String genre = cursor.getString(3);
-            String length = cursor.getString(4);
-            movieList.add(title + " | " + genre + " | " + length);
+            String tmdbScore = cursor.getString(4);
+            Cursor ratingCursor = dbHelper.getUserRating(movieId);
+            String userRating = "Not Rated";
+            if (ratingCursor.moveToFirst()) {
+                userRating = ratingCursor.getString(0);
+            }
+            ratingCursor.close();
+
+            movieList.add(title + " | " + genre + " | TMDB: " + tmdbScore + " | Your Rating: " + userRating);
             movieIds.add(movieId);
         }
         listView.setAdapter(new ArrayAdapter<>(FavoritesActivity.this, android.R.layout.simple_list_item_1, movieList));
