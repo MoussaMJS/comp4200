@@ -4,45 +4,47 @@
     android:padding="32dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
+    android:background="@drawable/gradient_background"
     android:id="@+id/main">
 
     <TextView
-        android:text="🎬 Movie Roulette"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp"
-        android:textColor="#333"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="🎬 Movie Roulette"
+        android:textColor="#D0161615"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnStart"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="🎲 Start Movie Roulette"
+        android:background="@drawable/rounded_button"
         android:backgroundTint="#FF5722"
         android:textColor="#FFF"
         android:padding="12dp" />
 
     <Button
         android:id="@+id/btnHistory"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="📜 View History"
         android:layout_marginTop="16dp"
         android:backgroundTint="#3F51B5"
+        android:background="@drawable/rounded_button"
         android:textColor="#FFF"
         android:padding="12dp" />
 
     <Button
         android:id="@+id/btnFavorites"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="⭐ View Favorites"
         android:layout_marginTop="16dp"
         android:backgroundTint="#009688"
+        android:background="@drawable/rounded_button"
         android:textColor="#FFF"
         android:padding="12dp" />
 </LinearLayout>
-
