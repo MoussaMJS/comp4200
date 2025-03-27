@@ -41,37 +41,39 @@ public class FavoritesActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
 
         Cursor cursor = dbHelper.getAllMovies();
-        ArrayList<String> movieList = new ArrayList<>();
+        ArrayList<Movie> movieList = new ArrayList<>();
+
         while (cursor.moveToNext()) {
             int movieId = cursor.getInt(1);
             String title = cursor.getString(2);
             String genre = cursor.getString(3);
-            String length = cursor.getString(4);
-            movieList.add(title + " | " + genre + " | " + length);
-            movieIds.add(movieId);
+            String tmdbScore = cursor.getString(4);
+            String posterPath = cursor.getString(5); // Adjust if your column index differs
+            Cursor ratingCursor = dbHelper.getUserRating(movieId);
+            String userRating = "Not Rated";
+            if (ratingCursor.moveToFirst()) {
+                userRating = ratingCursor.getString(0);
+            }
+            ratingCursor.close();
+
+            movieList.add(new Movie(movieId, title, genre, tmdbScore, userRating, posterPath));
         }
-        listView.setAdapter(new ArrayAdapter<>(FavoritesActivity.this, android.R.layout.simple_list_item_1, movieList));
+        cursor.close();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position < movieIds.size()) {
-                    int movieId = movieIds.get(position);
-                    Intent intent = new Intent(FavoritesActivity.this, ResultActivity.class);
-                    intent.putExtra("movie_id", movieId);
-                    intent.putExtra("fromList", true);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(FavoritesActivity.this, "Movie ID not found for this item.", Toast.LENGTH_SHORT).show();
-                }
-            }
+        FavoriteAdapter adapter = new FavoriteAdapter(this, movieList);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Movie selectedMovie = movieList.get(position);
+            Intent intent = new Intent(FavoritesActivity.this, ResultActivity.class);
+            intent.putExtra("movie_id", selectedMovie.movieId);
+            intent.putExtra("fromList", true);
+            startActivity(intent);
         });
 
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
-            }
+        btnHome.setOnClickListener(v -> {
+            startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
         });
+
     }
 }
