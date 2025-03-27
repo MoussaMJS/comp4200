@@ -9,17 +9,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "MovieDB.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE movies (id INTEGER PRIMARY KEY AUTOINCREMENT, movie_id INTEGER, title TEXT, genre TEXT, score TEXT)");
-        db.execSQL("CREATE TABLE history (id INTEGER PRIMARY KEY AUTOINCREMENT, movie_id INTEGER, title TEXT, genre TEXT, score TEXT)");
+        db.execSQL("CREATE TABLE movies (id INTEGER PRIMARY KEY AUTOINCREMENT, movie_id INTEGER, title TEXT, genre TEXT, score TEXT, poster_path TEXT)");
+        db.execSQL("CREATE TABLE history (id INTEGER PRIMARY KEY AUTOINCREMENT, movie_id INTEGER, title TEXT, genre TEXT, score TEXT, poster_path TEXT)");
         db.execSQL("CREATE TABLE user_ratings (id INTEGER PRIMARY KEY AUTOINCREMENT, movie_id INTEGER, rating REAL)");
     }
 
@@ -31,24 +30,26 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertMovie(String title, String genre, Double score, int tmdbId) {
+    public boolean insertMovie(String title, String genre, Double score, int tmdbId, String posterPath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
         values.put("genre", genre);
         values.put("score", score);
         values.put("movie_id", tmdbId);
+        values.put("poster_path", posterPath);
         long result = db.insert("movies", null, values);
         return result != -1;
     }
 
-    public boolean insertHistory(String title, String genre, Double score, int tmdbId) {
+    public boolean insertHistory(String title, String genre, Double score, int tmdbId, String posterPath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
         values.put("genre", genre);
         values.put("score", score);
         values.put("movie_id", tmdbId);
+        values.put("poster_path", posterPath);
         long result = db.insert("history", null, values);
         return result != -1;
     }
@@ -62,6 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM history", null);
     }
+
     public boolean insertUserRating(int movieId, double rating) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
